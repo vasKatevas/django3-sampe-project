@@ -1,6 +1,8 @@
 #virtualenv
 myvenv/
 
+*.env
+
 # Django #
 *.log
 *.pot

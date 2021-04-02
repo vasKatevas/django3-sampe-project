@@ -13,6 +13,20 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 from pathlib import Path
 import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+
+import environ
+env = environ.Env(
+    # set casting, default value
+    DEBUG=(bool, False)
+)
+
+# reading .env file
+environ.Env.read_env()
+
+# False if not in os.environ
+DEBUG = env('DEBUG')
+
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
@@ -20,7 +34,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '$2+ff(@u&9h7_q$()u&zfog4dj%c^s%%4rr#2n*+p)rwxp9&_*'
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -75,11 +89,13 @@ WSGI_APPLICATION = 'myproject.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
+
+# Parse database connection url strings like psql://user:pass@127.0.0.1:8458/db
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    # read os.environ['DATABASE_URL'] and raises ImproperlyConfigured exception if not found
+    'default': env.db(),
+    # read os.environ['SQLITE_URL']
+    'extra': env.db('SQLITE_URL', default='sqlite:///.db.sqlite3')
 }
 
 
