@@ -29,6 +29,7 @@ pipeline {
 
                 sh '''
                     pwd
+                    echo $WORKSPACE
                     ansible-playbook playbooks/check.yml
                     '''
             }
