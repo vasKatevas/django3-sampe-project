@@ -30,7 +30,7 @@ pipeline {
                 sh '''
                     pwd
                     echo $WORKSPACE
-                    ansible-playbook playbooks/check.yml
+                    ansible-playbook ~/workspace/ansible-project/./playbooks/check.yml
                     '''
             }
             }
