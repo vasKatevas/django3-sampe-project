@@ -23,5 +23,12 @@ pipeline {
                     ./manage.py test'''
             }
         }
+        stage('Deploy') {
+            steps {
+                sh '''
+                    echo "Deploy"
+                    '''
+            }
+        }
     }
 }
